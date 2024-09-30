@@ -1,0 +1,24 @@
+<!-- delete html confirmatiom to delete_product -->
+
+{% extends 'Home/base.html' %}
+
+{% block title %}
+Ecommerce | Delete Product
+{% endblock %}
+
+{% block content %}
+<table>
+    <tr><td colspan="2"><label>Do You Want To Delete {{ product.name }}? </label></td></tr>
+    <tr>
+        <form method="POST" action="{% url 'delete_product' product.id %}">
+            {% csrf_token %}
+            <input type="submit" class="btn btn-danger" value="Delete"/>
+        </form>
+    </tr>
+    <tr>
+        <td>
+            <a href="{% url 'Home' %}" class="btn btn-secondary">Cancel</a>
+        </td>
+    </tr>
+</table>
+{% endblock %}

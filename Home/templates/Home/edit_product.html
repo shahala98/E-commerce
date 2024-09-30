@@ -1,0 +1,90 @@
+{% extends 'Home/base.html' %}
+
+{% block title %}
+Ecommerce | Edit Product
+{% endblock %}
+
+{% block content %}
+<h2>Edit Product</h2>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table class="tab-responsive p-5 m-3" height="500px" width="50%">
+        <tr>
+            <td>
+                <label for="product_name">Product Name</label>
+                <input type="text" id="product_name" name="product_name" class="form-control" value="{{ product.name }}" required>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="product_description">Product Description</label>
+                <textarea id="product_description" name="product_description" class="form-control" rows="4" required>{{ product.description }}</textarea>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="product_image">Product Image</label>
+                <input type="file" id="product_image" name="product_image" accept="image/*">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="product_category">Product Category</label>
+                <select id="product_category" name="product_category" class="form-control" required>
+                    {% for category in categories %}
+                        <option value="{{ category.id }}" {% if product.category.id == category.id %}selected{% endif %}>{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </td>
+        </tr>
+    </table>
+</form>
+
+    </select>
+
+    <button type="submit">Save</button>
+</form>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+    form {
+        max-width: 500px;
+        margin: auto;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+    }
+    input[type="text"], textarea, select {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #45a049;
+    }
+</style>
+{% endblock %}

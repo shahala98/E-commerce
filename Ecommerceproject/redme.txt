@@ -1,0 +1,136 @@
+createsuperuser
+username= ecommerceadmin
+password= shalu98
+email = fthmashahala@gmail.com
+
+models
+
+1 check =python manage.py makemigration
+2 check manage.py migrate
+<script>
+        document.getElementById('productForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const formData = new FormData();
+            formData.append('product_name', document.getElementById('product_name').value);
+            formData.append('product_description', document.getElementById('product_description').value);
+            formData.append('product_image', document.getElementById('product_image').files[0]);
+            formData.append('product_category', document.getElementById('product_category').value); // Added category
+
+            fetch("{% url 'add_product' %}", {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Product added successfully!');
+                    document.getElementById('productForm').reset();
+                } else {
+                    alert('Failed to add product.');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+    form {
+        max-width: 500px;
+        margin: auto;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+    }
+    input[type="text"], textarea, select {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #45a049;
+    }
+</style>
+
+<label for="product_category">Product Category</label>
+    <select id="product_category" name="product_category" required>
+        {% for category in categories %}
+            <option value="{{ category.id }}">{{ category.name }}</option>
+
+            </tr>
+    <th><label>Category</label></th>
+    <td>
+    <select name="product_category" class="form-control">
+        {% for category in categories %}
+            <option value=""></option>
+        {% endfor %}
+    </select>
+</td>
+
+ try:
+            category_id = int(category_id)
+            category = Category.objects.get(id=category_id)
+        except (ValueError, Category.DoesNotExist):
+            categories = Category.objects.all()
+            return render(request, 'Home/add_product.html', {'categories': categories,})
+
+        product = Product(
+            name=name,
+            description=description,
+            category=category,
+            product_image=product_image
+        )
+        product.save()
+        return redirect('Home')
+
+    categories = Category.objects.all()
+    return render(request, 'Home/add_product.html', {'categories': categories})
+
+{% extends 'Home/base.html' %}
+
+{% block title %}
+Ecommerce | Edit New Product
+{% endblock %}
+<!-- product details like nmae catgory etc.... -->
+{% block content %}
+<h2>Add Product</h2>
+<!-- if product image is file then add enctype -->
+ 
+<form method="POST" enctype="multipart/form-data"> 
+    {% csrf_token %}
+    <table class="tab-responsive p-5 m-3" height="500px" width="50%">
+    <label for="product_name">Product Name</label>
+    <input type="text" id="product_name" name="product_name" class=" form control" value="{{ product.name }}" required>
+
+    <label for="product_description">Product Description</label>
+    <textarea id="product_description" name="product_description"  class=" form control" rows="4" required>{{ product.description }}</textarea>
+
+    <label for="product_image">Product Image</label>
+    <input type="file" id="product_image" name="product_image" accept="image/*" required>
+
+    <label for="product_category">Product Category</label>
+    <select id="product_category" name="product_category" required>
+        {% for category in categories %}
+            <option value="{{ category.id }}">{{ category.name }}</option>
+        {% endfor %}
